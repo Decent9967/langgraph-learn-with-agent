@@ -1,0 +1,69 @@
+{% extends "base.html" %}
+
+{% block title %}{{ quiz.title }} - {% endblock %}
+
+{% block extra_scripts %}
+<script>
+const QUIZ_FILE = '{{ quiz_file }}';
+let userAnswers = {{ saved_answers | tojson }};
+</script>
+<script src="{{ url_for('static', filename='js/quiz.js') }}"></script>
+{% endblock %}
+
+{% block content %}
+<div class="quiz-page" data-quiz-file="{{ quiz_file }}">
+    <div class="quiz-header">
+        <h1>{{ quiz.title }}</h1>
+        <div class="mode-toggle">
+            <button class="mode-btn" onclick="switchMode('single')">一题一页</button>
+            <button class="mode-btn active" onclick="switchMode('all')">全部显示</button>
+        </div>
+    </div>
+
+    <div class="quiz-progress">
+        <div class="progress-bar">
+            <div class="progress-fill" id="progressFill"></div>
+        </div>
+        <div class="progress-text">
+            <span id="answeredCount">0</span> / <span id="totalCount">{{ quiz.questions | length }}</span> 题
+        </div>
+    </div>
+
+    <div class="questions-container" id="questionsContainer">
+        {% for question in quiz.questions %}
+        <div class="question-card" data-question-id="{{ question.id }}" id="question-{{ loop.index }}">
+            <div class="question-header">
+                <span class="question-number">题目 {{ question.number }}</span>
+                <span class="question-status" id="status-{{ question.id }}"></span>
+            </div>
+            <div class="question-text">{{ question.text }}</div>
+            <div class="question-options">
+                {% for letter, text in question.options.items() %}
+                <label class="option-label">
+                    <input type="radio"
+                           name="{{ question.id }}"
+                           value="{{ letter }}"
+                           {% if saved_answers.get(question.id) == letter %}checked{% endif %}
+                           onchange="saveAnswer('{{ question.id }}', '{{ letter }}')">
+                    <span class="option-letter">{{ letter }}.</span>
+                    <span class="option-text">{{ text }}</span>
+                </label>
+                {% endfor %}
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+
+    <div class="quiz-actions">
+        <button class="btn btn-secondary" onclick="showQuizList()">返回列表</button>
+        <button class="btn btn-success" onclick="submitQuiz()">提交答案</button>
+    </div>
+
+    <!-- 结果展示区域 -->
+    <div id="resultArea" class="result-area" style="display: none;">
+        <h2>答题结果</h2>
+        <div class="score-summary" id="scoreSummary"></div>
+        <div id="resultDetails"></div>
+    </div>
+</div>
+{% endblock %}

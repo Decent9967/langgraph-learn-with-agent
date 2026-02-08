@@ -1,0 +1,26 @@
+/* ==================== 主题样式 ==================== */
+
+/* 主题切换按钮 */
+.theme-toggle:hover {
+    transform: scale(1.1);
+}
+
+/* 深色模式特定样式 */
+[data-theme="dark"] .code-block {
+    background-color: #2d2d2d;
+    border-color: #404040;
+}
+
+[data-theme="dark"] .question-card {
+    background-color: #252526;
+    border-color: #404040;
+}
+
+[data-theme="dark"] .option-label:hover {
+    background-color: #2d2d2d;
+}
+
+[data-theme="dark"] .result-area {
+    background-color: #252526;
+    border-color: #404040;
+}

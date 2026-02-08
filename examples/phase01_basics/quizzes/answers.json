@@ -1,0 +1,27 @@
+{
+  "last_updated": "2026-02-08T21:34:31.621256",
+  "quizzes": {
+    "examplesphase01_basicsquizzes\u0001_basics_quiz.md": {
+      "answers": {
+        "q1": "B",
+        "q2": "B",
+        "q3": "B",
+        "q4": "B"
+      }
+    },
+    "examples/phase01_basics/quizzes/01_basics_quiz.md": {
+      "answers": {
+        "q1": "B",
+        "q2": "B",
+        "q3": "B",
+        "q4": "B",
+        "q5": "B"
+      }
+    },
+    "examples/phase01_basics/quizzes/04_review_multiple_choice.md": {
+      "answers": {
+        "q1": "B"
+      }
+    }
+  }
+}

@@ -1,0 +1,37 @@
+{% extends "base.html" %}
+
+{% block title %}测试题列表 - {% endblock %}
+
+{% block content %}
+<div class="quiz-list-page">
+    <div class="page-header">
+        <h1>📝 测试题</h1>
+        <div class="breadcrumb">
+            <a href="{{ url_for('index') }}">首页</a>
+            <span class="separator">/</span>
+            <span>测试题</span>
+        </div>
+    </div>
+
+    <div class="quiz-cards">
+        {% for phase_group in nav.quizzes %}
+        <div class="phase-section">
+            <h2>{{ phase_group['phase'] }}</h2>
+            <div class="quiz-grid">
+                {% for quiz in phase_group['items'] %}
+                <div class="quiz-card">
+                    <h3>{{ quiz.title }}</h3>
+                    <p class="quiz-info">共 {{ quiz.count }} 道题</p>
+                    <div class="quiz-actions">
+                        <a href="{{ url_for('quiz', filepath=quiz.file) }}" class="btn btn-primary">
+                            开始答题
+                        </a>
+                    </div>
+                </div>
+                {% endfor %}
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+</div>
+{% endblock %}

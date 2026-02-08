@@ -1,0 +1,28 @@
+# LangGraph 学习项目配置文件
+#
+# 使用说明：
+# 1. 复制本文件为 config.yaml
+# 2. 填入你的真实 API keys
+# 3. config.yaml 已被 .gitignore 忽略，不会被提交
+
+llm:
+  # 默认使用的 LLM 提供商
+  provider: zhipu
+
+  # 各个提供商的配置
+  models:
+    zhipu:
+      model: glm-4-flash
+      api_key: 在这里填入你的智谱 API key
+      base_url: https://open.bigmodel.cn/api/paas/v4/
+      temperature: 0
+
+    openai:
+      model: gpt-4.1-mini
+      api_key: 在这里填入你的OpenAI key
+      temperature: 0
+
+    anthropic:
+      model: claude-sonnet-4-5-20250929
+      api_key: 在这里填入你的Anthropic key
+      temperature: 0

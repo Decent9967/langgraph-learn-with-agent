@@ -1,0 +1,53 @@
+# Python-generated files
+__pycache__/
+*.py[oc]
+build/
+dist/
+wheels/
+*.egg-info
+
+# Virtual environments
+.venv/
+.venv*/
+virt/
+env/
+ENV/
+
+# Environment variables with sensitive data
+.env
+.env.local
+.env.*.local
+
+# Configuration files with API keys
+config.yaml
+config.yml
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Logs
+*.log
+
+# LangGraph specific
+*.db
+*.sqlite
+langgraph_checkpoint.json
+
+# Test coverage
+.coverage
+htmlcov/
+.pytest_cache/
+
+# Claude Code local settings
+.claude/
+
+# Temporary screenshots (testing)
+*.png

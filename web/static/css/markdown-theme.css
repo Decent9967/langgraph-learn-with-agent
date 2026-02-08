@@ -1,0 +1,166 @@
+/* Markdown 主题样式覆盖
+ * 适配项目主题颜色系统，保持 GitHub Markdown 的排版样式
+ */
+
+/* ==================== 深色主题 ==================== */
+body[data-theme="dark"] .markdown-body {
+  /* 使用项目的主题颜色 */
+  background-color: transparent;
+  color: var(--text-primary);
+
+  /* 标题颜色 */
+  --fgColor-default: var(--text-primary);
+  --fgColor-muted: var(--text-secondary);
+  --fgColor-accent: var(--primary-color);
+
+  /* 背景色 */
+  --bgColor-default: var(--bg-primary);
+  --bgColor-muted: var(--bg-secondary);
+
+  /* 边框色 */
+  --borderColor-default: var(--border-color);
+  --borderColor-muted: var(--border-color);
+
+  /* 语义化颜色 */
+  --fgColor-danger: var(--error-color);
+  --fgColor-success: var(--success-color);
+  --fgColor-attention: var(--warning-color);
+
+  /* 代码块背景 - 匹配 theme.css */
+  --color-prettylights-syntax-comment: #6a9955;
+  --color-prettylights-syntax-constant: #4fc1ff;
+  --color-prettylights-syntax-entity: #4ec9b0;
+  --color-prettylights-syntax-keyword: #c586c0;
+  --color-prettylights-syntax-string: #ce9178;
+  --color-prettylights-syntax-variable: #9cdcfe;
+  --color-prettylights-syntax-markup-heading: var(--primary-color);
+  --color-prettylights-syntax-markup-bold: var(--text-primary);
+  --color-prettylights-syntax-markup-italic: var(--text-primary);
+  --color-prettylights-syntax-markup-list: var(--text-primary);
+}
+
+/* 深色模式下的代码块 */
+body[data-theme="dark"] .markdown-body pre {
+  background-color: #2d2d2d !important;
+  border: 1px solid #404040 !important;
+}
+
+body[data-theme="dark"] .markdown-body code {
+  background-color: #2d2d2d !important;
+  color: #e0e0e0;
+}
+
+body[data-theme="dark"] .markdown-body pre code {
+  background-color: transparent !important;
+}
+
+/* 深色模式下的其他元素 */
+body[data-theme="dark"] .markdown-body blockquote {
+  border-left-color: var(--border-color);
+  background-color: var(--bg-secondary);
+  color: var(--text-secondary);
+}
+
+body[data-theme="dark"] .markdown-body table {
+  background-color: var(--bg-secondary);
+  border-color: var(--border-color);
+}
+
+body[data-theme="dark"] .markdown-body table tr {
+  background-color: var(--bg-secondary);
+  border-color: var(--border-color);
+}
+
+body[data-theme="dark"] .markdown-body table tr:nth-child(2n) {
+  background-color: var(--bg-tertiary);
+}
+
+body[data-theme="dark"] .markdown-body hr {
+  border-color: var(--border-color);
+}
+
+body[data-theme="dark"] .markdown-body a {
+  color: var(--primary-color);
+}
+
+/* ==================== 浅色主题 ==================== */
+body[data-theme="light"] .markdown-body {
+  /* 使用项目的主题颜色 */
+  background-color: transparent;
+  color: var(--text-primary);
+
+  /* 标题颜色 */
+  --fgColor-default: var(--text-primary);
+  --fgColor-muted: var(--text-secondary);
+  --fgColor-accent: var(--primary-color);
+
+  /* 背景色 */
+  --bgColor-default: var(--bg-primary);
+  --bgColor-muted: var(--bg-secondary);
+
+  /* 边框色 */
+  --borderColor-default: var(--border-color);
+  --borderColor-muted: var(--border-color);
+
+  /* 语义化颜色 */
+  --fgColor-danger: var(--error-color);
+  --fgColor-success: var(--success-color);
+  --fgColor-attention: var(--warning-color);
+
+  /* 代码高亮 - VS Code 浅色主题 */
+  --color-prettylights-syntax-comment: #6a9955;
+  --color-prettylights-syntax-constant: #098658;
+  --color-prettylights-syntax-entity: #cd3131;
+  --color-prettylights-syntax-keyword: #0000ff;
+  --color-prettylights-syntax-string: #a31515;
+  --color-prettylights-syntax-variable: #001080;
+  --color-prettylights-syntax-markup-heading: var(--primary-color);
+  --color-prettylights-syntax-markup-bold: var(--text-primary);
+  --color-prettylights-syntax-markup-italic: var(--text-primary);
+  --color-prettylights-syntax-markup-list: var(--text-primary);
+}
+
+/* 浅色模式下的代码块 */
+body[data-theme="light"] .markdown-body pre {
+  background-color: #f6f8fa !important;
+  border: 1px solid var(--border-color) !important;
+}
+
+body[data-theme="light"] .markdown-body code {
+  background-color: #f6f8fa;
+  color: #e83e8c;
+}
+
+body[data-theme="light"] .markdown-body pre code {
+  background-color: transparent !important;
+  color: var(--text-primary);
+}
+
+/* 浅色模式下的其他元素 */
+body[data-theme="light"] .markdown-body blockquote {
+  border-left-color: var(--border-color);
+  background-color: var(--bg-secondary);
+  color: var(--text-secondary);
+}
+
+body[data-theme="light"] .markdown-body table {
+  background-color: var(--bg-primary);
+  border-color: var(--border-color);
+}
+
+body[data-theme="light"] .markdown-body table tr {
+  background-color: var(--bg-primary);
+  border-color: var(--border-color);
+}
+
+body[data-theme="light"] .markdown-body table tr:nth-child(2n) {
+  background-color: var(--bg-secondary);
+}
+
+body[data-theme="light"] .markdown-body hr {
+  border-color: var(--border-color);
+}
+
+body[data-theme="light"] .markdown-body a {
+  color: var(--primary-color);
+}

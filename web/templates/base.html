@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}LangGraph 学习{% endblock %}</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/base.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/theme.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/github-markdown.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/markdown-theme.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/code.css') }}">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@400;500;700&display=swap');
+    </style>
+    {% block extra_head %}{% endblock %}
+</head>
+<body data-theme="light">
+    <!-- 顶部栏 -->
+    <header class="header">
+        <div class="header-container">
+            <div class="logo">
+                <a href="{{ url_for('index') }}" style="display: flex; align-items: center; gap: 0.5rem; text-decoration: none; color: inherit;">
+                    <span class="logo-icon">📚</span>
+                    <span class="logo-text">LangGraph 学习</span>
+                </a>
+            </div>
+            <div class="header-actions">
+                <button class="theme-toggle" onclick="toggleTheme()" title="切换主题">
+                    <span class="theme-icon">🌙</span>
+                </button>
+                <button class="menu-toggle" onclick="toggleMenu()" id="menuToggle">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <!-- 主内容区 -->
+    <div class="main-container">
+        <!-- 侧边栏导航 -->
+        <aside class="sidebar" id="sidebar">
+            <nav class="nav">
+                {% block navigation %}
+                {% if nav %}
+                <h3>📖 讲义</h3>
+                <ul class="nav-sections">
+                    {% for phase_group in nav.lectures %}
+                    <li class="nav-section">
+                        <div class="nav-section-header" onclick="toggleSection(this)">
+                            <span class="nav-section-title">{{ phase_group['phase'] }}</span>
+                            <span class="nav-section-toggle">▼</span>
+                        </div>
+                        <ul class="nav-section-list">
+                            {% for lecture in phase_group['items'] %}
+                            <li><a href="{{ url_for('lecture', filepath=lecture.file) }}">{{ lecture.title }}</a></li>
+                            {% endfor %}
+                        </ul>
+                    </li>
+                    {% endfor %}
+                </ul>
+
+                <h3>📝 测试题</h3>
+                <ul class="nav-sections">
+                    {% for phase_group in nav.quizzes %}
+                    <li class="nav-section">
+                        <div class="nav-section-header" onclick="toggleSection(this)">
+                            <span class="nav-section-title">{{ phase_group['phase'] }}</span>
+                            <span class="nav-section-toggle">▼</span>
+                        </div>
+                        <ul class="nav-section-list">
+                            {% for quiz in phase_group['items'] %}
+                            <li><a href="{{ url_for('quiz', filepath=quiz.file) }}">{{ quiz.title }}</a></li>
+                            {% endfor %}
+                        </ul>
+                    </li>
+                    {% endfor %}
+                </ul>
+                {% endif %}
+                {% endblock %}
+            </nav>
+        </aside>
+
+        <!-- 内容区 -->
+        <main class="content">
+            {% block content %}{% endblock %}
+        </main>
+    </div>
+
+    <!-- JavaScript -->
+    <script src="{{ url_for('static', filename='js/theme.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/navigation.js') }}"></script>
+    {% block extra_scripts %}{% endblock %}
+</body>
+</html>

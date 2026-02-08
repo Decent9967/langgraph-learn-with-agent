@@ -1,0 +1,120 @@
+{% extends "base.html" %}
+
+{% block title %}{{ quiz.title }} - {% endblock %}
+
+{% block extra_scripts %}
+<script>
+const QUIZ_FILE = '{{ quiz_file }}';
+let userAnswers = {{ saved_answers | tojson }};
+</script>
+<script src="{{ url_for('static', filename='js/quiz.js') }}"></script>
+{% endblock %}
+
+{% block content %}
+<div class="quiz-page" data-quiz-file="{{ quiz_file }}">
+    <div class="quiz-header">
+        <h1>{{ quiz.title }}</h1>
+        <div class="mode-toggle">
+            <button class="mode-btn active" onclick="switchMode('single')">一题一页</button>
+            <button class="mode-btn" onclick="switchMode('all')">全部显示</button>
+        </div>
+    </div>
+
+    <div class="quiz-progress">
+        <div class="progress-bar">
+            <div class="progress-fill" id="progressFill"></div>
+        </div>
+        <div class="progress-text">
+            <span id="answeredCount">0</span> / <span id="totalCount">{{ quiz.questions | length }}</span> 题
+        </div>
+    </div>
+
+    <!-- 题目导航栏（一题一页模式） -->
+    <div class="question-nav single-mode-nav" id="questionNav">
+        <div style="text-align: center; margin-bottom: 0.5rem; color: var(--text-secondary); font-size: 0.9rem;">
+            点击题目编号快速跳转
+        </div>
+        <div class="question-nav-grid" id="questionNavGrid">
+            {% for question in quiz.questions %}
+            <div class="question-nav-item {% if saved_answers.get(question.id) %}answered{% endif %}"
+                 data-question-index="{{ loop.index }}"
+                 onclick="goToQuestion({{ loop.index }})">
+                {{ loop.index }}
+            </div>
+            {% endfor %}
+        </div>
+        <div class="question-nav-buttons">
+            <button class="nav-btn" id="prevBtn" onclick="prevQuestion()" disabled>← 上一题</button>
+            <span class="nav-info" id="navInfo">1 / {{ quiz.questions | length }}</span>
+            <button class="nav-btn" id="nextBtn" onclick="nextQuestion()">下一题 →</button>
+        </div>
+    </div>
+
+    <div class="questions-container" id="questionsContainer">
+        {% for question in quiz.questions %}
+        <div class="question-card single-mode {% if loop.first %}active{% endif %}"
+             data-question-id="{{ question.id }}"
+             data-question-type="{{ question.type }}"
+             id="question-{{ loop.index }}">
+            <div class="question-header">
+                <span class="question-number">题目 {{ question.number }}
+                {% if question.type == 'choice' %}
+                    <span class="question-type-badge choice">选择题</span>
+                {% elif question.type == 'open' %}
+                    <span class="question-type-badge open">开放题</span>
+                {% endif %}
+                </span>
+                <span class="question-status" id="status-{{ question.id }}"></span>
+            </div>
+            <div class="question-text">{{ question.text }}</div>
+
+            {% if question.type == 'choice' %}
+            <div class="question-options">
+                {% for letter, text in question.options.items() %}
+                <label class="option-label">
+                    <input type="radio"
+                           name="{{ question.id }}"
+                           value="{{ letter }}"
+                           {% if saved_answers.get(question.id) == letter %}checked{% endif %}
+                           onchange="saveAnswer('{{ question.id }}', '{{ letter }}')">
+                    <span class="option-letter">{{ letter }}.</span>
+                    <span class="option-text">{{ text }}</span>
+                </label>
+                {% endfor %}
+            </div>
+
+            {% elif question.type == 'open' %}
+            <div class="question-open-answer">
+                <textarea
+                    id="answer-{{ question.id }}"
+                    class="open-answer-input"
+                    placeholder="写下你的理解..."
+                    rows="4"
+                    onchange="saveOpenAnswer('{{ question.id }}', this.value)"
+                >{{ saved_answers.get(question.id, '') }}</textarea>
+                <button class="btn btn-secondary btn-sm" onclick="toggleExplanation('{{ question.id }}')">
+                    <span class="toggle-icon">👁️</span> 查看答案
+                </button>
+                <div class="explanation-box" id="explanation-{{ question.id }}" style="display: none;">
+                    <h4>✅ 正确答案</h4>
+                    <div class="explanation-content">{{ question.explanation | safe }}</div>
+                </div>
+            </div>
+            {% endif %}
+        </div>
+        {% endfor %}
+    </div>
+
+    <div class="quiz-actions">
+        <button class="btn btn-secondary" onclick="showQuizList()">返回列表</button>
+        <button class="btn btn-success" onclick="submitQuiz()">提交答案</button>
+    </div>
+
+    <!-- 结果展示区域 -->
+    <div id="resultArea" class="result-area" style="display: none;">
+        <h2>答题结果</h2>
+        <div class="score-summary" id="scoreSummary"></div>
+        <div id="resultDetails"></div>
+    </div>
+</div>
+{% endblock %}

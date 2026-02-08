@@ -1,0 +1,68 @@
+{% extends "base.html" %}
+
+{% block title %}首页 - {% endblock %}
+
+{% block content %}
+<div class="home">
+    <div class="hero">
+        <h1>👋 欢迎来到 LangGraph 学习平台</h1>
+        <p class="hero-subtitle">从零开始学习 LangGraph 框架，构建智能 Agent 应用</p>
+    </div>
+
+    <div class="section-cards">
+        <div class="card">
+            <h2>📖 讲义文档</h2>
+            <p>系统化的学习讲义，从基础概念到高级模式</p>
+            <div class="lecture-list">
+                {% for phase_group in nav.lectures %}
+                <div class="phase-group">
+                    <div class="phase-group-header" onclick="togglePhaseGroup(this)">
+                        <h3>{{ phase_group['phase'] }}</h3>
+                        <span class="phase-group-toggle">▼</span>
+                    </div>
+                    <ul class="phase-group-list">
+                        {% for lecture in phase_group['items'] %}
+                        <li><a href="{{ url_for('lecture', filepath=lecture.file) }}">{{ lecture.title }}</a></li>
+                        {% endfor %}
+                    </ul>
+                </div>
+                {% endfor %}
+            </div>
+        </div>
+
+        <div class="card">
+            <h2>📝 测试题</h2>
+            <p>通过测试题验证学习成果，巩固知识</p>
+            <div class="quiz-list">
+                {% for phase_group in nav.quizzes %}
+                <div class="phase-group">
+                    <div class="phase-group-header" onclick="togglePhaseGroup(this)">
+                        <h3>{{ phase_group['phase'] }}</h3>
+                        <span class="phase-group-toggle">▼</span>
+                    </div>
+                    <ul class="phase-group-list">
+                        {% for quiz in phase_group['items'] %}
+                        <li>
+                            <a href="{{ url_for('quiz', filepath=quiz.file) }}">
+                                {{ quiz.title }} ({{ quiz.count }}题)
+                            </a>
+                        </li>
+                        {% endfor %}
+                    </ul>
+                </div>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+
+    <div class="info">
+        <h3>💡 使用提示</h3>
+        <ul>
+            <li>点击左侧导航栏选择讲义或测试题</li>
+            <li>测试题支持两种模式：一题一页、全部显示</li>
+            <li>答案会实时保存，随时可以继续</li>
+            <li>支持深色/浅色主题切换</li>
+        </ul>
+    </div>
+</div>
+{% endblock %}
